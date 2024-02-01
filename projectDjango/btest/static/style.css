@@ -2,12 +2,61 @@
 
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 50px;
+    text-align: left;
+}
+
+.panel {
+    border: 1px solid black;
+    color: #ddd;
+    border-radius: 3px;
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 15%;
+    height: 100%;
+    float: left;
+    background-color: rgb(97, 132, 148);
 }
 
 h1 {
-    color: #333;
+    text-align: center;
+}
+
+.logo {
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    line-height: 100px;
+    object-fit: contain;
+    height: 15%;
+    text-align: center;
+    background-image: url("Mountains.jpg");
+    background-size: 100% 100%;
+}
+
+.panel_button {
+    display: list-item;
+    padding: 15px 0px;
+    color: #ddd;
+    width: 100%;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    transition: 0.5s;
+    font-size: 1.2em;
+}
+
+.panel_button:hover {
+    background-color: #3333333a;
+}
+
+.workspace {
+    position: fixed;
+    float: right;
+    height: 100%;
+    left: 15%;
+    width: 85%;
 }
 
 table {

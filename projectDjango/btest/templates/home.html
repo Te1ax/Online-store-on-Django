@@ -1,109 +1,108 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Интернет-магазин</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
     <style>
-        /* Добавленные стили для кнопок и блоков таблиц */
-        
-        .table-container {
-            display: none;
-        }
-        
-        button {
-            margin: 10px;
-            padding: 8px;
-            cursor: pointer;
-        }
+      .table-container {
+        display: none;
+      }
+      
+      button {
+        margin: 10px;
+        padding: 8px;
+        cursor: pointer;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <!-- Добавлены кнопки для переключения между таблицами -->
-    <button onclick="toggleTable('orders')">Показать заказы</button>
-    <button onclick="toggleTable('products')">Показать товары</button>
-
-    <!-- Таблица заказов -->
-    <div id="orders-table" class="table-container">
+  <body>
+    <div class="panel">
+      <div class="logo">
+        <h3>Панель управления</h3>
+      </div>
+      <button class="panel_button" onclick="toggleTable('orders')">Показать заказы</button>
+      <button class="panel_button" onclick="toggleTable('products')">Показать товары</button>
+    </div>
+    <div class="workspace">
+      <div id="orders-table" class="table-container">
         <h1>Список заказов</h1>
         {% if orders %}
-        <table>
+          <table>
             <thead>
-                <tr>
-                    <th>Номер заказа</th>
-                    <th>Клиент</th>
-                    <th>Товар</th>
-                    <th>Цена товара</th>
-                    <th>Способ оплаты</th>
-                    <th>Способ доставки</th>
-                    <th>Дата заказа</th>
-                </tr>
+              <tr>
+                <th>Номер заказа</th>
+                <th>Клиент</th>
+                <th>Товар</th>
+                <th>Цена товара</th>
+                <th>Способ оплаты</th>
+                <th>Способ доставки</th>
+                <th>Дата заказа</th>
+              </tr>
             </thead>
             <tbody>
-                {% for order in orders %}
+              {% for order in orders %}
                 <tr>
-                    <td>{{ order.order_number }}</td>
-                    <td>{{ order.customer.name }}</td>
-                    <td>{{ order.product.name }}</td>
-                    <td>{{ order.product.current_price }} руб</td>
-                    <td>{{ order.payment_method }}</td>
-                    <td>{{ order.delivery_method }}</td>
-                    <td>{{ order.order_date }}</td>
+                  <td>{{ order.order_number }}</td>
+                  <td>{{ order.customer.name }}</td>
+                  <td>{{ order.product.name }}</td>
+                  <td>{{ order.product.current_price }} руб</td>
+                  <td>{{ order.payment_method }}</td>
+                  <td>{{ order.delivery_method }}</td>
+                  <td>{{ order.order_date }}</td>
                 </tr>
-                {% endfor %}
+              {% endfor %}
             </tbody>
-        </table>
+          </table>
         {% else %}
-        <p>Нет доступных заказов.</p>
+          <p>Нет доступных заказов.</p>
         {% endif %}
-    </div>
+      </div>
 
-    <!-- Таблица товаров -->
-    <div id="products-table" class="table-container">
+      <div id="products-table" class="table-container">
         <h1>Перечень товаров</h1>
         {% if products %}
-        <table>
+          <table>
             <thead>
-                <tr>
-                    <th>Товар</th>
-                    <th>Цена</th>
-                    <th>Описание</th>
-                    <th>Наличие на складе</th>
-                </tr>
+              <tr>
+                <th>Товар</th>
+                <th>Цена</th>
+                <th>Описание</th>
+                <th>Наличие на складе</th>
+                <th>Номера заказов</th>
+              </tr>
             </thead>
             <tbody>
-                {% for product in products %}
+              {% for product, order_numbers in product_order_numbers.items %}
                 <tr>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.current_price }} руб</td>
-                    <td>{{ product.short_description }}</td>
-                    <td>{{ product.stock_quantity }} шт.</td>
+                  <td>{{ product.name }}</td>
+                  <td>{{ product.current_price }} руб</td>
+                  <td>{{ product.short_description }}</td>
+                  <td>{{ product.stock_quantity }} шт.</td>
+                  <td>{{ order_numbers|join:', ' }}</td>
                 </tr>
-                {% endfor %}
+              {% endfor %}
             </tbody>
-        </table>
+          </table>
         {% else %}
-        <p>Нет доступных товаров.</p>
+          <p>Нет доступных товаров.</p>
         {% endif %}
+      </div>
     </div>
-
-    <!-- Добавлен скрипт для управления видимостью таблиц -->
     <script>
-        function toggleTable(tableId) {
-            var ordersTable = document.getElementById('orders-table');
-            var productsTable = document.getElementById('products-table');
-
-            if (tableId === 'orders') {
-                ordersTable.style.display = 'block';
-                productsTable.style.display = 'none';
-            } else if (tableId === 'products') {
-                ordersTable.style.display = 'none';
-                productsTable.style.display = 'block';
-            }
+      function toggleTable(tableId) {
+        var ordersTable = document.getElementById('orders-table')
+        var productsTable = document.getElementById('products-table')
+      
+        if (tableId === 'orders') {
+          ordersTable.style.display = 'block'
+          productsTable.style.display = 'none'
+        } else if (tableId === 'products') {
+          ordersTable.style.display = 'none'
+          productsTable.style.display = 'block'
         }
+      }
     </script>
-</body>
-
+  </body>
 </html>
